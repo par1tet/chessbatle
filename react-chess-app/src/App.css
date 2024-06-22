@@ -1,27 +1,47 @@
 body {
-    --width-cell: 100px;
-    --height-cell: 100px;
+    --width-cell: 80px;
+    --height-cell: 80px;
+    background-color: rgb(132, 121, 121);
 }
 
 .black-cell {
-    background-color: rgb(55, 40, 40);
+    background-color: rgb(51, 43, 43);
 }
 
 .white-cell {
-    background-color: rgb(223, 214, 173);
+    background-color: rgb(190, 184, 162);
 }
 
 .cell-board {
-    border: 1px solid black;
+    border: 0px;
     width: var(--width-cell);
     height: var(--height-cell);
     margin: 0px;
     padding: 0px;
+    transition: 0.26s;
+}
+
+.cell-board:hover {
+    cursor: pointer;
+    background-color: rgb(46, 194, 213);
+    box-shadow: 0px 0px 30px rgb(0, 255, 238);
+}
+
+.selected {
+    background-color: rgb(213, 46, 46);
+    box-shadow: 0px 0px 30px rgb(255, 0, 0);
 }
 
 .board {
     display: grid;
     grid-template-rows: repeat(8, var(--height  -cell));
     grid-template-columns: repeat(8, var(--width-cell));
+    width: calc(8 * var(--width-cell));
+    border-radius: 10px;
+    overflow: hidden;
 
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40vh;
+    transform: translate(0%,-50%);
 }
