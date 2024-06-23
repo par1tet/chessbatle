@@ -22,9 +22,29 @@ body {
     font-size: 0px;
 }
 
-.cell-board > img {
+.cell-board > .piece {
     width: var(--width-cell);
     height: var(--height-cell);
+    border: 0px;
+    offset: 0px;
+}
+
+
+.piece[celldata='  '] {
+    border: 0px;
+    offset: 0px;
+
+    display: hide;
+}
+
+.piece[celldata='Rb'] {
+    background-image: url("img/pieces/blackRook.png");
+    background-size: var(--width-cell);
+}
+
+.piece[celldata='Rw'] {
+    background-image: url("img/pieces/whiteRook.png");
+    background-size: var(--width-cell);
 }
 
 .hidden-piece {
