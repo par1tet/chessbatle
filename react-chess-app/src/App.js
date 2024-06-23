@@ -1,5 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import axios from 'axios';
+import Piece from './components/Piece.jsx';
 import './App.css'
 
 function App() {
@@ -42,12 +43,11 @@ function App() {
 	// }
 
 	function cellBeenClick(e){
+		e.stopPropagation()
 		if (coordsOut[0] !== undefined){
-			e.target.classList.remove('selected')
 			let numberOfCell = e.target.attributes[1].value
 			let documentBoard = document.querySelector('.board')
 			let cells = documentBoard.children
-			setCoordsOut([])
 
 			axios.post('http://localhost:8000/can_to_move',{
 				"coordsOut": coordsOut,
@@ -58,20 +58,23 @@ function App() {
 				// "piece": cells[(coordsOut[0]*8+coordsOut[1])].innerHTML
 			})
 			.then(r => {
+				// console.log(r.data)
+				if(r.data.toCanMove === true){
+					setCoordsOut([])
+				}
 				updateField()
-				console.log(r.data)
 			})
 
 			for (let i = 0;i < cells.length;i++){
 				cells[i].classList.remove('selected')
 			}
-
 		}else{
-			if(e.target.innerHTML === '  '){
+			if(e.target.attributes.celldata.value === '  '){
 				return 0;
 			}
 			e.target.classList.add('selected')
 			let numberOfCell = e.target.attributes[1].value
+
 			setCoordsOut([
 				Math.trunc(numberOfCell / 8),
 				numberOfCell % 8
@@ -79,12 +82,23 @@ function App() {
 		}
 	}
 
+
+
 	return (
 		<div className="App">
 			<div className='board'>
 				{field.map((row, indexRow) =>
 					row.map((cell, indexColumn) =>
-						<button className={'cell-board'} number={indexRow*8+indexColumn} key={indexRow*8+indexColumn} onClick={e => cellBeenClick(e)}>{cell}</button>
+						<button
+							className={'cell-board'}
+							number={indexRow*8+indexColumn}
+							key={indexRow*8+indexColumn}
+							onClick={e => cellBeenClick(e)}
+							celldata={cell}
+						>
+							<Piece cellName={cell} number={indexRow*8+indexColumn} celldata={cell}>
+							</Piece>
+						</button>
 					)
 				)}
 			</div>
