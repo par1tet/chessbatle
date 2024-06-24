@@ -57,6 +57,26 @@ body {
     background-size: var(--width-cell);
 }
 
+.piece[celldata='Qb'] {
+    background-image: url("img/pieces/blackQueen.png");
+    background-size: var(--width-cell);
+}
+
+.piece[celldata='Qw'] {
+    background-image: url("img/pieces/whiteQueen.png");
+    background-size: var(--width-cell);
+}
+
+.piece[celldata='Kb'] {
+    background-image: url("img/pieces/blackKing.png");
+    background-size: var(--width-cell);
+}
+
+.piece[celldata='Kw'] {
+    background-image: url("img/pieces/whiteKing.png");
+    background-size: var(--width-cell);
+}
+
 .hidden-piece {
     display: none;
     width: 0px;
