@@ -77,6 +77,40 @@ body {
     background-size: var(--width-cell);
 }
 
+.piece[celldata='Nb'] {
+    background-image: url("img/pieces/blackKnight.png");
+    background-size: var(--width-cell);
+}
+
+.piece[celldata='Nw'] {
+    background-image: url("img/pieces/whiteKnight.png");
+    background-size: var(--width-cell);
+}
+
+.piece[celldata='pb'] {
+    background-image: url("img/pieces/blackPawn.png");
+    background-size: var(--width-cell);
+}
+
+.piece[celldata='pw'] {
+    background-image: url("img/pieces/whitePawn.png");
+    background-size: var(--width-cell);
+}
+
+.who-is-move[whoIsMoving="white"] {
+    background-color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 12px;
+}
+
+.who-is-move[whoIsMoving="black"] {
+    background-color: black;
+    width: 30px;
+    height: 30px;
+    border-radius: 12px;
+}
+
 .hidden-piece {
     display: none;
     width: 0px;
@@ -96,14 +130,16 @@ body {
 
 .board {
     display: grid;
+    position: absolute;
     grid-template-rows: repeat(8, var(--height  -cell));
     grid-template-columns: repeat(8, var(--width-cell));
     width: calc(8 * var(--width-cell));
     border-radius: 10px;
     overflow: hidden;
 
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40vh;
-    transform: translate(0%,-50%);
+
+    top: 42%;
+    left:  50%;
+
+    transform: translate(-50%,-50%);
 }

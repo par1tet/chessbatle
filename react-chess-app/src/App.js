@@ -10,6 +10,7 @@ function App() {
 	const [field, setField] = useState([])
 	const [coordsOut, setCoordsOut] = useState([])
 	const [isSelected, setIsSelected] = useState(false)
+	const [isMoving, setIsMoving] = useState('white')
 
 	useEffect(() => {
 		axios.get('http://192.168.0.110:8000/get_field')
@@ -55,11 +56,12 @@ function App() {
 
 	function cellBeenClick(e){
 		e.stopPropagation()
-		console.log(e.target.attributes.celldata.value);
+		// console.log(e.target.attributes.celldata.value);
 		if (isSelected){
 			let numberOfCell = e.target.attributes[1].value
 			let documentBoard = document.querySelector('.board')
 			let cells = documentBoard.children
+			const currentPiece = cells[(coordsOut[0]*8+coordsOut[1])].attributes.celldata.value
 			// console.log(23)
 
 			const coordsIn = [
@@ -80,7 +82,8 @@ function App() {
 			axios.post('http://192.168.0.110:8000/can_to_move',{
 				"coordsOut": coordsOut,
 				"coordsIn": coordsIn,
-				"piece": cells[(coordsOut[0]*8+coordsOut[1])].attributes.celldata.value[0]
+				"isMoving": isMoving,
+				"piece": currentPiece[0]
 			})
 			.then(r => {
 				// console.log(r.data)
@@ -88,6 +91,11 @@ function App() {
 				socket.emit('make_move', {"move":r.data.move})
 
 				if(r.data.toCanMove === true){
+					if (isMoving === 'white'){
+						setIsMoving('black')
+					}else{
+						setIsMoving('white')
+					}
 					setIsSelected(false)
 					setCoordsOut([])
 					for (let i = 0;i < cells.length;i++){
@@ -98,9 +106,25 @@ function App() {
 			})
 		}else{
 			if(e.target.attributes.celldata.value === '  '){
-				console.log(34)
+				// console.log(34)
 				return 0;
 			}
+
+			let documentBoard = document.querySelector('.board')
+			let cells = documentBoard.children
+			const currentPiece = e.target.attributes.celldata.value
+
+			// console.log(isMoving[0])
+			// console.log(currentPiece[1])
+			if (isMoving[0] !== currentPiece[1]){
+				for (let i = 0;i < cells.length;i++){
+					cells[i].classList.remove('selected')
+				}
+				setIsSelected(false)
+				setCoordsOut([])
+				return 0
+			}
+
 			e.target.classList.add('selected')
 			let numberOfCell = e.target.attributes[1].value
 			// console.log(234)
@@ -132,6 +156,7 @@ function App() {
 					)
 				)}
 			</div>
+			<div className='who-is-move' whoIsMoving={isMoving}></div>
 		</div>
 	);
 }
