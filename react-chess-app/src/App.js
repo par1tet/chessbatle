@@ -38,6 +38,13 @@ function App() {
 		}
 	})
 
+	useEffect(() => {
+		socket.on("do_make_move", data => {
+			// console.log(data.move)
+			updateField()
+		})
+	}, [socket])
+
 	// function makeMove(coordsIn,coordsOut){
 	// 	axios.post('http://localhost:8000/move',{
 	// 		"coordsIn": coordsIn,
@@ -53,19 +60,33 @@ function App() {
 			let numberOfCell = e.target.attributes[1].value
 			let documentBoard = document.querySelector('.board')
 			let cells = documentBoard.children
-			console.log(23)
+			// console.log(23)
 
+			const coordsIn = [
+				Math.trunc(numberOfCell / 8),
+				numberOfCell % 8
+			]
+
+
+			if (coordsOut[0] === coordsIn[0] && coordsOut[1] === coordsIn[1]){
+				for (let i = 0;i < cells.length;i++){
+					cells[i].classList.remove('selected')
+				}
+				setIsSelected(false)
+				setCoordsOut([])
+				return 0
+			}
 
 			axios.post('http://192.168.0.110:8000/can_to_move',{
 				"coordsOut": coordsOut,
-				"coordsIn": [
-					Math.trunc(numberOfCell / 8),
-					numberOfCell % 8
-				],
+				"coordsIn": coordsIn,
 				"piece": cells[(coordsOut[0]*8+coordsOut[1])].attributes.celldata.value[0]
 			})
 			.then(r => {
-				console.log(r.data)
+				// console.log(r.data)
+
+				socket.emit('make_move', {"move":r.data.move})
+
 				if(r.data.toCanMove === true){
 					setIsSelected(false)
 					setCoordsOut([])
@@ -82,7 +103,7 @@ function App() {
 			}
 			e.target.classList.add('selected')
 			let numberOfCell = e.target.attributes[1].value
-			console.log(234)
+			// console.log(234)
 
 			setIsSelected(true)
 

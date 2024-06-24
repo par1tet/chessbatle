@@ -2,15 +2,10 @@ import React from 'react';
 
 function Piece(props) {
     function getClass(cell){
-		let currentClass = ''
-
 		if (cell === '  '){
-			currentClass = 'hidden-piece'
-		}else if(cell === 'Rw'){
-			currentClass = ''
+			return 'hidden-piece'
 		}
-
-		return currentClass
+		return ''
 	}
 
     return (<div

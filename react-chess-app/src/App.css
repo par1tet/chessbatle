@@ -47,6 +47,16 @@ body {
     background-size: var(--width-cell);
 }
 
+.piece[celldata='Bb'] {
+    background-image: url("img/pieces/blackBishop.png");
+    background-size: var(--width-cell);
+}
+
+.piece[celldata='Bw'] {
+    background-image: url("img/pieces/whiteBishop.png");
+    background-size: var(--width-cell);
+}
+
 .hidden-piece {
     display: none;
     width: 0px;
