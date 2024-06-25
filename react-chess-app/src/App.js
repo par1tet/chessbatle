@@ -57,8 +57,10 @@ function App() {
 	function cellBeenClick(e){
 		e.stopPropagation()
 		// console.log(e.target.attributes.celldata.value);
+		// console.log(coordsOut)
+		// console.log(isSelected)
 		if (isSelected){
-			let numberOfCell = e.target.attributes[1].value
+			let numberOfCell = e.target.attributes.number.value
 			let documentBoard = document.querySelector('.board')
 			let cells = documentBoard.children
 			const currentPiece = cells[(coordsOut[0]*8+coordsOut[1])].attributes.celldata.value
@@ -69,6 +71,7 @@ function App() {
 				numberOfCell % 8
 			]
 
+			// console.log(numberOfCell)
 
 			if (coordsOut[0] === coordsIn[0] && coordsOut[1] === coordsIn[1]){
 				for (let i = 0;i < cells.length;i++){
@@ -142,21 +145,31 @@ function App() {
 
 	return (
 		<div className="App">
-			<div className='board'>
-				{field.map((row, indexRow) =>
-					row.map((cell, indexColumn) =>
-						<Piece
-							className={'cell-board'}
-							number={indexRow*8+indexColumn}
-							key={indexRow*8+indexColumn}
-							onClick={e => cellBeenClick(e)}
-							celldata={cell}
-						>
-						</Piece>
-					)
-				)}
+			<div className='board-game'>
+				<div className='board'>
+					{field.map((row, indexRow) =>
+						row.map((cell, indexColumn) =>
+							<Piece
+								className={'cell-board'}
+								number={indexRow*8+indexColumn}
+								key={indexRow*8+indexColumn}
+								onClick={e => cellBeenClick(e)}
+								celldata={cell}
+								setcoordsout={setCoordsOut}
+								setisselected={setIsSelected}
+								coordsout={coordsOut}
+								ismoving={isMoving}
+								cellbeenclicked={cellBeenClick}
+							>
+							</Piece>
+						)
+					)}
+				</div>
+				<div className='who-is-move' whoismoving={isMoving}></div>
 			</div>
-			<div className='who-is-move' whoIsMoving={isMoving}></div>
+			<div className='refresh'>
+				<button >refresh</button>
+			</div>
 		</div>
 	);
 }

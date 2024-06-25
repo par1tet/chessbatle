@@ -97,18 +97,33 @@ body {
     background-size: var(--width-cell);
 }
 
-.who-is-move[whoIsMoving="white"] {
-    background-color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 12px;
+.board-game{
+    display: flex;
+    position: absolute;
+
+    flex-direction: column;
+
+    top: 44%;
+    left:  50%;
+
+    transform: translate(-50%,-50%);
 }
 
-.who-is-move[whoIsMoving="black"] {
-    background-color: black;
+.who-is-move {
     width: 30px;
     height: 30px;
     border-radius: 12px;
+    width: calc(var(--width-cell) * 8);
+    outline: 4px solid rgb(164, 163, 163);
+    margin-top: 12px;
+}
+
+.who-is-move[whoismoving="white"] {
+    background-color: white;
+}
+
+.who-is-move[whoismoving="black"] {
+    background-color: black;
 }
 
 .hidden-piece {
@@ -119,8 +134,6 @@ body {
 
 .cell-board:hover {
     cursor: pointer;
-    background-color: rgb(46, 194, 213);
-    box-shadow: 0px 0px 30px rgb(0, 255, 238);
 }
 
 .selected {
@@ -130,16 +143,13 @@ body {
 
 .board {
     display: grid;
-    position: absolute;
     grid-template-rows: repeat(8, var(--height  -cell));
     grid-template-columns: repeat(8, var(--width-cell));
     width: calc(8 * var(--width-cell));
     border-radius: 10px;
     overflow: hidden;
+}
 
-
-    top: 42%;
-    left:  50%;
-
-    transform: translate(-50%,-50%);
+.background-none {
+    background-color: rgba(255, 255, 255, 0);
 }
