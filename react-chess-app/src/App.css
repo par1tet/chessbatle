@@ -1,15 +1,15 @@
 body {
     --width-cell: 80px;
     --height-cell: 80px;
-    background-color: rgb(132, 121, 121);
+    background: linear-gradient(129deg, rgba(2,138,88,1) 0%, rgba(14,117,116,1) 50%, rgba(0,164,255,1) 100%);
 }
 
 .black-cell {
-    background-color: rgb(51, 43, 43);
+    background-color: rgb(69, 53, 53);
 }
 
 .white-cell {
-    background-color: rgb(190, 184, 162);
+    background-color: rgb(192, 187, 169);
 }
 
 .cell-board {
@@ -35,6 +35,10 @@ body {
     offset: 0px;
 
     display: hide;
+}
+
+.piece[celldata='  ']:hover {
+    cursor: default;
 }
 
 .piece[celldata='Rb'] {
@@ -112,9 +116,9 @@ body {
 .who-is-move {
     width: 30px;
     height: 30px;
-    border-radius: 12px;
+    border-radius: 6px;
     width: calc(var(--width-cell) * 8);
-    outline: 4px solid rgb(164, 163, 163);
+    outline: 2px solid rgb(164, 163, 163);
     margin-top: 12px;
 }
 
@@ -143,11 +147,14 @@ body {
 
 .board {
     display: grid;
-    grid-template-rows: repeat(8, var(--height  -cell));
+    grid-template-rows: repeat(8, var(--height-cell));
     grid-template-columns: repeat(8, var(--width-cell));
     width: calc(8 * var(--width-cell));
-    border-radius: 10px;
+    outline: 2px solid black;
+    border-radius: 0px;
     overflow: hidden;
+    box-shadow: 0px 0px 300px rgb(130, 128, 128);
+    
 }
 
 .background-none {

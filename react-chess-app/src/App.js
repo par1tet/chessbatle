@@ -10,7 +10,12 @@ function App() {
 	const [field, setField] = useState([])
 	const [coordsOut, setCoordsOut] = useState([])
 	const [isSelected, setIsSelected] = useState(false)
-	const [isMoving, setIsMoving] = useState('white')
+	const [isMoving, setIsMoving] = useState((() => {
+		if (localStorage.getItem('whoismove') === null){
+			localStorage.setItem('whoismove', 'white')
+		}
+		return localStorage.getItem('whoismove')
+	})())
 
 	useEffect(() => {
 		axios.get('http://192.168.0.110:8000/get_field')
@@ -96,8 +101,10 @@ function App() {
 				if(r.data.toCanMove === true){
 					if (isMoving === 'white'){
 						setIsMoving('black')
+						localStorage.setItem('whoismove', 'black')
 					}else{
 						setIsMoving('white')
+						localStorage.setItem('whoismove', 'white')
 					}
 					setIsSelected(false)
 					setCoordsOut([])
@@ -141,7 +148,14 @@ function App() {
 		}
 	}
 
-
+	function refreshField(){
+		axios.get('http://192.168.0.110:8000/refresh_field')
+		.then(r => {
+			updateField()
+			setIsMoving('white')
+			localStorage.setItem('whoismove', 'white')
+		})
+	}
 
 	return (
 		<div className="App">
@@ -168,7 +182,7 @@ function App() {
 				<div className='who-is-move' whoismoving={isMoving}></div>
 			</div>
 			<div className='refresh'>
-				<button >refresh</button>
+				<button onClick={e => refreshField(e)}>refresh</button>
 			</div>
 		</div>
 	);
