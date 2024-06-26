@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import axios from 'axios';
 import Piece from './components/Piece.jsx';
-import io, { Socket } from 'socket.io-client'
+import io from 'socket.io-client'
 import './App.css'
 
 const socket = io.connect("http://192.168.0.110:8000")
@@ -16,6 +16,10 @@ function App() {
 		}
 		return localStorage.getItem('whoismove')
 	})())
+	const [checked, setChecked] = useState({
+		"isCheck":false,
+		"cell":[0,0]
+	})
 
 	useEffect(() => {
 		axios.get('http://192.168.0.110:8000/get_field')
@@ -50,6 +54,22 @@ function App() {
 			updateField()
 		})
 	}, [socket])
+
+	useEffect(() => {
+		// console.log(checked)
+		let documentBoard = document.querySelector('.board')
+		let cells = documentBoard.children
+		if(checked.isCheck){
+			// console.log(checked.cell)
+			// console.log(cells)
+			// console.log(cells[(checked.cell[0]*8+checked.cell[1])])
+			cells[(checked.cell[0]*8+checked.cell[1])].classList.add('checked-cell')
+		}else{
+			for (let i = 0;i < cells.length;i++){
+				cells[i].classList.remove('checked-cell')
+			}
+		}
+	}, [checked])
 
 	// function makeMove(coordsIn,coordsOut){
 	// 	axios.post('http://localhost:8000/move',{
@@ -91,7 +111,10 @@ function App() {
 				"coordsOut": coordsOut,
 				"coordsIn": coordsIn,
 				"isMoving": isMoving,
-				"piece": currentPiece[0]
+				"piece": currentPiece[0],
+				"context": {
+					"checked": checked
+				}
 			})
 			.then(r => {
 				// console.log(r.data)
@@ -113,6 +136,10 @@ function App() {
 					}
 				}
 				updateField()
+				// let temp = r.data.context.checked
+				// console.log(r.data.context.checked)
+				// console.log(temp)
+				// setChecked(r.data.context.checked)
 			})
 		}else{
 			if(e.target.attributes.celldata.value === '  '){
@@ -152,6 +179,10 @@ function App() {
 		axios.get('http://192.168.0.110:8000/refresh_field')
 		.then(r => {
 			updateField()
+			setChecked({
+				"isCheck":false,
+				"cell":[0,0]
+			})
 			setIsMoving('white')
 			localStorage.setItem('whoismove', 'white')
 		})
