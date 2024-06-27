@@ -21,19 +21,20 @@ function App() {
 		setIsMoving(r.data.whoismove)
 	})
 
-	useEffect(() => {
-		axios.get('http://192.168.0.110:8000/get_field')
-		.then(r => {
-			setField(r.data.field)
-		})
-	}, [])
-
 	function updateField(){
 		axios.get('http://192.168.0.110:8000/get_field')
 		.then(r => {
 			setField(r.data.field)
+			// console.log(r.data.context.checked)
+			if (r.data.context.checked.isCheck){
+				setChecked(r.data.context.checked)
+			}
 		})
 	}
+
+	useEffect(() => {
+		updateField()
+	}, [])
 
 	useEffect(() => {
 		let documentBoard = document.querySelector('.board')
@@ -55,6 +56,11 @@ function App() {
 			// console.log(234)
 			// console.log(data)
 			updateField()
+		})
+
+		socket.on("do_check", data => {
+			// console.log(data)
+			setChecked(data.checked)
 		})
 	}, [socket])
 
@@ -140,7 +146,9 @@ function App() {
 				// let temp = r.data.context.checked
 				// console.log(r.data.context.checked)
 				// console.log(temp)
-				setChecked(r.data.context.checked)
+				if (r.data.context.checked.isCheck){
+					socket.emit('check', {"checked":r.data.context.checked})
+				}
 			})
 		}else{
 			if(e.target.attributes.celldata.value === '  '){
@@ -185,13 +193,12 @@ function App() {
 			.then(r => {
 				setIsMoving(r.data.whoismove)
 			})
-			updateField()
 			setChecked({
 				"isCheck":false,
 				"cell":[0,0]
 			})
 			setIsMoving('white')
-			localStorage.setItem('whoismove', 'white')
+			updateField()
 		})
 	}
 

@@ -39,6 +39,12 @@ io.on("connection", socket => {
             "whoismove":chessAPIMain.whoismove
         })
     })
+
+    socket.on('check', data => {
+        // console.log(data)
+        socket.broadcast.emit("do_check", data)
+        socket.emit("do_check", data)
+    })
 })
 
 server.listen(PORT, () => {
@@ -47,13 +53,20 @@ server.listen(PORT, () => {
 
 app.get('/get_field', (req,res) => {
     res.send({
-        "field": board.getField()
+        "field": board.getField(),
+        "context":{
+            "checked": chessAPIMain.context.checked
+        }
     })
 })
 
 app.get('/refresh_field', (req,res) => {
+    chessAPIMain.context.checked = {'isCheck':false, cell:[0,0]}
     res.send({
-        "field": board.refreshField()
+        "field": board.refreshField(),
+        "context":{
+            "checked": chessAPIMain.context.checked
+        }
     })
 })
 
@@ -70,13 +83,13 @@ app.post('/can_to_move', (req,res) => {
         let itsCheck = ''
         if (toCanMove){
             itsCheck = chessAPIMain.itsCheck(req.body.coordsIn, board.field)
+            chessAPIMain.context.checked = itsCheck
             if (chessAPIMain.whoismove === 'white'){
                 chessAPIMain.whoismove = 'black'
             }else{
                 chessAPIMain.whoismove = 'white'
             }
         }
-
         res.send({
             "move":move,
             "toCanMove": toCanMove,

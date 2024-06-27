@@ -357,7 +357,7 @@ class King extends Piece{// Король
     }
 }
 
-export let allPieces = {
+export const allPieces = {
     "p":Pawn,
     "N":Knight,
     "B":Bishop,

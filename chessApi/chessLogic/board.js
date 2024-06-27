@@ -137,8 +137,14 @@ export class Board{// Данный класс реализует доску
             tempField[coordsIn[0]][coordsIn[1]] = tempField[coordsOut[0]][coordsOut[1]]
             tempField[coordsOut[0]][coordsOut[1]] = '  '
 
-            this.setField(tempField)
-            return true
+            // console.log(this.itsCheckForSide(isMoving,tempField))
+            // console.log(this.itsCheckForCounterSide(isMoving,tempField))
+            if(this.itsCheckForCounterSide(isMoving,tempField).isCheck){
+                return false
+            }else{
+                this.setField(tempField)
+                return true
+            }
         }else{
             return false
         }
@@ -150,6 +156,8 @@ export class Board{// Данный класс реализует доску
             "cell": [0,6]
         }
 
+        const pieceMove = new allPieces[((this.getField())[coordsOut[0]][coordsOut[1]][0])]()
+
         this.getField().forEach((row, indexRow) => {
             row.forEach((cell, indexColumn) => {
                 // console.log(cell)
@@ -158,7 +166,6 @@ export class Board{// Данный класс реализует доску
                 if (cell[1] !== ((this.getField())[coordsOut[0]][coordsOut[1]])[1]){
                     // console.log(cell)
                     if (cell[0] === 'K'){
-                        const pieceMove = new allPieces[(this.getField()[coordsOut[0]][coordsOut[1]][0])]()
                         
                         if (cell[1] === 'w'){
                             checked.isCheck = pieceMove.toCanMove(this.getField(), coordsOut, [indexRow,indexColumn], 'black')
@@ -170,6 +177,102 @@ export class Board{// Данный класс реализует доску
                 }
             })
         })
+
+        return checked
+    }
+
+    itsCheckForCounterSide(side,field){
+        const checked = {
+            "isCheck": false,
+            "cell": [0,6]
+        }
+
+        // console.log(field)
+
+        // let counterSide = 'white'
+        // if (side === 'white') counterSide = 'black'
+
+        field.forEach((row, indexRow) => {
+            row.forEach((cell, indexColumn) => {
+                // console.log(cell)
+                if (cell === `K${side[0]}`){
+                    checked.cell[0] = indexRow
+                    checked.cell[1] = indexColumn
+                }
+            })
+        })
+
+        for (let i = 0;i < field.length;i++){
+            for (let k = 0;k < field[0].length;k++){
+                const cell = field[i][k]
+                if (cell === '  ') continue;
+                if (cell[1] !== side[0]){
+                    // console.log(cell)
+                    // console.log(side)
+                    // console.log(cell)
+                    const pieceMove = new allPieces[`${cell[0]}`]()
+
+                    // console.log([i, k]);
+                    // console.log(field[i][k]);
+                    // console.log(checked.cell)
+                    // console.log(pieceMove)
+
+                    // console.log(pieceMove.toCanMove(field, [i, k], checked.cell, side))
+                    if(pieceMove.toCanMove(field, [i, k], checked.cell, side)){
+                        checked.isCheck = true
+                        return checked
+                    }
+                }
+            }
+        }
+
+        return checked
+    }
+
+    itsCheckForSide(side,field){
+        const checked = {
+            "isCheck": false,
+            "cell": [0,6]
+        }
+
+        // console.log(field)
+
+        let counterSide = 'white'
+        if (side === 'white') counterSide = 'black'
+
+        field.forEach((row, indexRow) => {
+            row.forEach((cell, indexColumn) => {
+                // console.log(cell)
+                if (cell === `K${counterSide[0]}`){
+                    checked.cell[0] = indexRow
+                    checked.cell[1] = indexColumn
+                }
+            })
+        })
+
+        for (let i = 0;i < field.length;i++){
+            for (let k = 0;k < field[0].length;k++){
+                const cell = field[i][k]
+                if (cell === '  ') continue;
+                if (cell[1] === side[0]){
+                    // console.log(cell)
+                    // console.log(side)
+                    // console.log(cell)
+                    const pieceMove = new allPieces[`${cell[0]}`]()
+
+                    // console.log([i, k]);
+                    // console.log(field[i][k]);
+                    // console.log(checked.cell)
+                    // console.log(pieceMove)
+
+                    // console.log(pieceMove.toCanMove(field, [i, k], checked.cell, counterSide))
+                    if(pieceMove.toCanMove(field, [i, k], checked.cell, counterSide)){
+                        checked.isCheck = true
+                        return checked
+                    }
+                }
+            }
+        }
 
         return checked
     }

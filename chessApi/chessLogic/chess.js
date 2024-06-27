@@ -6,9 +6,10 @@ class chessAPI{
     
     // Класс chessAPI, который является главным для работы с API
 
-    constructor(board,whoismove){
+    constructor(board,whoismove,context){
         this.board = board
         this.whoismove = whoismove
+        this.context = context
     }
 
     makeMove(board = Board, move, coordsOut,coordsIn, notationName, isMoving = 'white') {// Данный метод реализует главную функцию, отвечающию за ход
@@ -34,6 +35,6 @@ const field = [
 ]// Создаем поле для доски // Стартовая доска
 
 export const board = new Board(field)// Создаем доску
-export const chessAPIMain = new chessAPI(board, 'white')// Создаем главный API
+export const chessAPIMain = new chessAPI(board, 'white', {"checked":{}})// Создаем главный API
 
 // chessAPIMain.makeMove(board, 'Re5', 'black')// Делаем ход
