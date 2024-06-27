@@ -21,6 +21,10 @@ class chessAPI{
     itsCheck(coordsOut){
         return this.board.itsCheck(coordsOut)
     }
+
+    getAllPossibleMovesOfPiece(coordsOut){
+        return board.getAllPossibleMovesOfPiece(coordsOut, this.whoismove)
+    }
 }
 
 const field = [

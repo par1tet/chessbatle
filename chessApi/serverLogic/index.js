@@ -112,3 +112,10 @@ app.post('/set_whoismove', (req,res) => {
         "whoismove":chessAPIMain.whoismove
     })
 })
+
+app.post('/getAllPossibleMovesOfPiece', (req,res) => {
+    // console.log(req.body.coordsOut)
+    res.send({
+        "allPossbleMoves":chessAPIMain.getAllPossibleMovesOfPiece(req.body.coordsOut)
+    })
+})

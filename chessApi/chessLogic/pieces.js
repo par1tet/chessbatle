@@ -15,6 +15,18 @@ class Piece{
         }
         return false
     }
+
+    getAllPossibleMoves(field, coordsOut, whoismoving){
+        const allPossibleMoves = []
+        field.forEach((row,indexRow) => {
+            row.forEach((cell,indexColumn) => {
+                if(this.toCanMove(field, coordsOut, [indexRow,indexColumn], whoismoving)){
+                    allPossibleMoves.push([indexRow,indexColumn])
+                }
+            })
+        });
+        return allPossibleMoves
+    }
 }
 
 class Pawn extends Piece{// Пешка

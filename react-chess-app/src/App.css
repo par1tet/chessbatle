@@ -169,3 +169,7 @@ body {
     box-shadow: revert-layer;
     box-shadow: unset; */
 }
+
+.possible-move{
+    box-shadow: inset 0px 0px 28px aqua;
+}

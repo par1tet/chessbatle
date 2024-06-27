@@ -16,11 +16,6 @@ function App() {
 		"cell":[0,0]
 	})
 
-	axios.get('http://192.168.0.110:8000/get_whoismove')
-	.then(r => {
-		setIsMoving(r.data.whoismove)
-	})
-
 	function updateField(){
 		axios.get('http://192.168.0.110:8000/get_field')
 		.then(r => {
@@ -33,6 +28,10 @@ function App() {
 	}
 
 	useEffect(() => {
+		axios.get('http://192.168.0.110:8000/get_whoismove')
+		.then(r => {
+			setIsMoving(r.data.whoismove)
+		})
 		updateField()
 	}, [])
 
@@ -48,6 +47,27 @@ function App() {
 			}
 		}
 	})
+
+	useEffect(() => {
+		let documentBoard = document.querySelector('.board')
+		let cells = documentBoard.children
+		
+		if (coordsOut.length !== 0){
+			axios.post('http://192.168.0.110:8000/getAllPossibleMovesOfPiece',{
+				'coordsOut':coordsOut
+			})
+			.then(r => {
+				console.log(r.data.allPossbleMoves)
+				r.data.allPossbleMoves.forEach(move => {
+					cells[(move[0]*8+move[1])].classList.add('possible-move')
+				})
+			})
+		}else{
+			for (let i = 0;i < cells.length;i++){
+				cells[i].classList.remove('possible-move')
+			}
+		}
+	}, [isSelected])
 
 	useEffect(() => {
 		socket.on("do_make_move", data => {
@@ -79,14 +99,6 @@ function App() {
 			}
 		}
 	}, [checked])
-
-	// function makeMove(coordsIn,coordsOut){
-	// 	axios.post('http://localhost:8000/move',{
-	// 		"coordsIn": coordsIn,
-	// 		"coordsOut": coordsOut,
-	// 	})
-	// 	updateField()
-	// }
 
 	function cellBeenClick(e){
 		e.stopPropagation()
