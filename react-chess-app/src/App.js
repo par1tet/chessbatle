@@ -10,15 +10,15 @@ function App() {
 	const [field, setField] = useState([])
 	const [coordsOut, setCoordsOut] = useState([])
 	const [isSelected, setIsSelected] = useState(false)
-	const [isMoving, setIsMoving] = useState((() => {
-		if (localStorage.getItem('whoismove') === null){
-			localStorage.setItem('whoismove', 'white')
-		}
-		return localStorage.getItem('whoismove')
-	})())
+	const [isMoving, setIsMoving] = useState('')
 	const [checked, setChecked] = useState({
 		"isCheck":false,
 		"cell":[0,0]
+	})
+
+	axios.get('http://192.168.0.110:8000/get_whoismove')
+	.then(r => {
+		setIsMoving(r.data.whoismove)
 	})
 
 	useEffect(() => {
@@ -51,6 +51,9 @@ function App() {
 	useEffect(() => {
 		socket.on("do_make_move", data => {
 			// console.log(data.move)
+			setIsMoving(data.whoismove)
+			// console.log(234)
+			// console.log(data)
 			updateField()
 		})
 	}, [socket])
@@ -122,24 +125,22 @@ function App() {
 				socket.emit('make_move', {"move":r.data.move})
 
 				if(r.data.toCanMove === true){
-					if (isMoving === 'white'){
-						setIsMoving('black')
-						localStorage.setItem('whoismove', 'black')
-					}else{
-						setIsMoving('white')
-						localStorage.setItem('whoismove', 'white')
-					}
 					setIsSelected(false)
 					setCoordsOut([])
 					for (let i = 0;i < cells.length;i++){
 						cells[i].classList.remove('selected')
 					}
 				}
+				axios.get('http://192.168.0.110:8000/get_whoismove')
+				.then(r => {
+					setIsMoving(r.data.whoismove)
+					localStorage.setItem('whoismove', r.data.whoismove)
+				})
 				updateField()
 				// let temp = r.data.context.checked
 				// console.log(r.data.context.checked)
 				// console.log(temp)
-				// setChecked(r.data.context.checked)
+				setChecked(r.data.context.checked)
 			})
 		}else{
 			if(e.target.attributes.celldata.value === '  '){
@@ -178,6 +179,12 @@ function App() {
 	function refreshField(){
 		axios.get('http://192.168.0.110:8000/refresh_field')
 		.then(r => {
+			axios.post('http://192.168.0.110:8000/set_whoismove', {
+				"value":'white'
+			})
+			.then(r => {
+				setIsMoving(r.data.whoismove)
+			})
 			updateField()
 			setChecked({
 				"isCheck":false,

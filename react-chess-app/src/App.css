@@ -161,5 +161,10 @@ body {
 }
 
 .checked-cell {
-    background-color: red;
+    box-shadow: inset 0px 0px 28px rgba(255, 0, 0, 0.887);
+    /* box-shadow: inherit;
+    box-shadow: initial;
+    box-shadow: revert;
+    box-shadow: revert-layer;
+    box-shadow: unset; */
 }
