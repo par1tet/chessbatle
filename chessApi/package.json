@@ -1,0 +1,22 @@
+{
+  "name": "chessapi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "server": "nodemon serverLogic/index.js",
+    "start": "node serverLogic/index.js"
+  },
+  "keywords": [],
+  "author": "par1tet",
+  "license": "ISC",
+  "description": "hi, if you read",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
