@@ -1,4 +1,5 @@
 import React from 'react';
+import './Piece.css'
 
 function Piece(props) {
     function getClass(cell){
@@ -15,15 +16,8 @@ function Piece(props) {
 		// console.log(props.isselected)
 		props.cellbeenclicked(e)
 	}
-	function onDragLeaveHandler(e){
-		
-	}
-	function onDragEndHandler(e){
-		
-	}
 	function onDragOverHandler(e){
 		e.preventDefault()
-
 	}
 	function onDragStartHandler(e, pieceNumber){
 		// console.log(props.ismoving[0])
@@ -48,11 +42,8 @@ function Piece(props) {
 				draggable={true}
 
 				onDragStart={e => {onDragStartHandler(e, props.number)}}
-				onDragLeave={e => {onDragLeaveHandler(e)}}
-				onDragEnd={e => {onDragEndHandler(e)}}
 				onDragOver={e => {onDragOverHandler(e)}}
 				onDrop={e => {onDropHandler(e, props.number)}}
-
 			></div> );
 }
 

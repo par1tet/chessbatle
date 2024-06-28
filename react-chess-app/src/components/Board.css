@@ -1,0 +1,30 @@
+.board {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-60%);
+    display: grid;
+    grid-template-rows: repeat(8, var(--height-cell));
+    grid-template-columns: repeat(8, var(--width-cell));
+    width: calc(8 * var(--width-cell));
+    height: calc(8 * var(--height-cell));
+    border: 2px solid black;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0px 0px 300px rgb(130, 128, 128);
+    /* background-color: blue; */
+
+    @media (max-width: 780px) {
+        --width-cell: 47px;
+        --height-cell: 47px
+    }
+
+    @media (min-width: 780px) {
+        --width-cell: 8vh;
+        --height-cell: 8vh
+    }
+}
+
+@media screen {
+    
+}

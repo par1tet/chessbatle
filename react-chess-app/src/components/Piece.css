@@ -1,0 +1,116 @@
+.background-none {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.checked-cell {
+    box-shadow: inset 0px 0px 28px rgba(255, 0, 0, 0.887);
+    /* box-shadow: inherit;
+    box-shadow: initial;
+    box-shadow: revert;
+    box-shadow: revert-layer;
+    box-shadow: unset; */
+}
+
+.possible-move{
+    box-shadow: inset 0px 0px 30px aqua;
+}
+
+.hidden-piece {
+    display: none;
+    width: 0px;
+    height: 0px;
+}
+
+.cell-board:hover {
+    cursor: pointer;
+}
+
+.black-cell {
+    background-color: rgb(69, 53, 53);
+}
+
+.white-cell {
+    background-color: rgb(192, 187, 169);
+}
+
+.cell-board {
+    border: 0px;
+    width: var(--width-cell);
+    height: var(--height-cell);
+    margin: 0px;
+    padding: 0px;
+    transition: box-shadow 0.25s;
+    font-size: 0px;
+}
+
+.cell-board > .piece {
+    width: var(--width-cell);
+    height: var(--height-cell);
+    border: 0px;
+    offset: 0px;
+}
+
+.piece[celldata='  '] {
+    border: 0px;
+    offset: 0px;
+
+    display: hide;
+}
+
+.piece[celldata='  ']:hover {
+    cursor: default;
+}
+.piece[celldata='Rb'] {
+    background-image: url("../img/pieces/blackRook.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='Rw'] {
+    background-image: url("../img/pieces/whiteRook.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='Bb'] {
+    background-image: url("../img/pieces/blackBishop.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='Bw'] {
+    background-image: url("../img/pieces/whiteBishop.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='Qb'] {
+    background-image: url("../img/pieces/blackQueen.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='Qw'] {
+    background-image: url("../img/pieces/whiteQueen.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='Kb'] {
+    background-image: url("../img/pieces/blackKing.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='Kw'] {
+    background-image: url("../img/pieces/whiteKing.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='Nb'] {
+    background-image: url("../img/pieces/blackKnight.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='Nw'] {
+    background-image: url("../img/pieces/whiteKnight.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='pb'] {
+    background-image: url("../img/pieces/blackPawn.png");
+    background-size: var(--width-cell);
+}
+.piece[celldata='pw'] {
+    background-image: url("../img/pieces/whitePawn.png");
+    background-size: var(--width-cell);
+}
+
+
+.selected {
+    box-shadow: inset 0px 0px 30px rgba(0, 255, 17, 0.86);
+    cursor:default;
+}

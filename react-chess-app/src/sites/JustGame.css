@@ -1,0 +1,22 @@
+body {
+    --width-cell: 80px;
+    --height-cell: 80px;
+    background: linear-gradient(129deg, rgba(2,138,88,1) 0%, rgba(14,117,116,1) 50%, rgba(0,164,255,1) 100%);
+}
+
+.who-is-move {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    width: calc(var(--width-cell) * 8);
+    outline: 2px solid rgb(164, 163, 163);
+    margin-top: 12px;
+}
+
+.who-is-move[whoismoving="white"] {
+    background-color: white;
+}
+
+.who-is-move[whoismoving="black"] {
+    background-color: black;
+}
