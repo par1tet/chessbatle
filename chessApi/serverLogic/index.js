@@ -81,6 +81,7 @@ app.post('/can_to_move', (req,res) => {
         const move = board.fromCoordsInMove(req.body.coordsOut, req.body.coordsIn)
         const toCanMove = chessAPIMain.makeMove(board, move, req.body.coordsOut, req.body.coordsIn, req.body.piece, chessAPIMain.whoismove)
         let itsCheck = ''
+        let itsCheckMate = false
         if (toCanMove){
             itsCheck = chessAPIMain.itsCheck(req.body.coordsIn, board.field)
             chessAPIMain.context.checked = itsCheck
@@ -89,12 +90,16 @@ app.post('/can_to_move', (req,res) => {
             }else{
                 chessAPIMain.whoismove = 'white'
             }
+            if(itsCheck.isCheck){
+                itsCheckMate = chessAPIMain.itsCheckMate(chessAPIMain.whoismove, board.field)
+            }
         }
         res.send({
             "move":move,
             "toCanMove": toCanMove,
             "context":{
-                "checked": itsCheck
+                "checked": itsCheck,
+                "checkMate": itsCheckMate
             }
         })
     }

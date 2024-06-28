@@ -18,7 +18,7 @@ body {
     height: var(--height-cell);
     margin: 0px;
     padding: 0px;
-    transition: 0.26s;
+    transition: 0.25s;
     font-size: 0px;
 }
 

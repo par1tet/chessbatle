@@ -15,6 +15,7 @@ function App() {
 		"isCheck":false,
 		"cell":[0,0]
 	})
+	const [checkmate, setCheckmate] = useState(false)
 
 	function updateField(){
 		axios.get('http://192.168.0.110:8000/get_field')
@@ -57,7 +58,7 @@ function App() {
 				'coordsOut':coordsOut
 			})
 			.then(r => {
-				console.log(r.data.allPossbleMoves)
+				// console.log(r.data.allPossbleMoves)
 				r.data.allPossbleMoves.forEach(move => {
 					cells[(move[0]*8+move[1])].classList.add('possible-move')
 				})
@@ -99,6 +100,12 @@ function App() {
 			}
 		}
 	}, [checked])
+
+	useEffect(() => {
+		if (checkmate){
+			console.log(`${isMoving} победили!`)
+		}
+	}, [checkmate])
 
 	function cellBeenClick(e){
 		e.stopPropagation()
@@ -160,6 +167,11 @@ function App() {
 				// console.log(temp)
 				if (r.data.context.checked.isCheck){
 					socket.emit('check', {"checked":r.data.context.checked})
+				}
+
+				// console.log(r.data.context.checkMate)
+				if (r.data.context.checkMate){
+					setCheckmate(true)
 				}
 			})
 		}else{

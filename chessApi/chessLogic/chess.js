@@ -1,4 +1,5 @@
 import { Board } from './board.js'
+import { allPieces } from './pieces.js'
 
 class chessAPI{
     // whiteboard microsoft
@@ -24,6 +25,24 @@ class chessAPI{
 
     getAllPossibleMovesOfPiece(coordsOut){
         return board.getAllPossibleMovesOfPiece(coordsOut, this.whoismove)
+    }
+
+    itsCheckMate(side,field){
+        let itsCheckMate = true
+        console.log(side)
+        field.forEach((row, indexRow) => {
+            row.forEach((cell, indexColumn) => {
+                if (cell === '  ') return 0
+                if (cell[1] !== side[0]) return 0
+                // console.log(cell)
+                // console.log(allPieces[(cell[0])]);
+                // console.log((this.getAllPossibleMovesOfPiece([indexRow,indexColumn])).length)
+                if ((this.getAllPossibleMovesOfPiece([indexRow,indexColumn])).length !== 0){
+                    itsCheckMate = false
+                }
+            })
+        })
+        return itsCheckMate
     }
 }
 
