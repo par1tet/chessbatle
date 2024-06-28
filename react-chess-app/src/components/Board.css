@@ -19,6 +19,11 @@
         --height-cell: 47px
     }
 
+    @media (max-width: 480px) {
+        --width-cell: calc(12.5vw - 0.6px);
+        --height-cell: calc(12.5vw - 0.6px);
+    }
+
     @media (min-width: 780px) {
         --width-cell: 8vh;
         --height-cell: 8vh
