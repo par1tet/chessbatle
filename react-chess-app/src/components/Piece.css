@@ -3,7 +3,7 @@
 }
 
 .checked-cell {
-    box-shadow: inset 0px 0px 28px rgba(255, 0, 0, 0.887);
+    box-shadow: inset 0px 0px calc(var(--width-cell) / 4) rgba(255, 0, 0, 0.887);
     /* box-shadow: inherit;
     box-shadow: initial;
     box-shadow: revert;
@@ -12,7 +12,7 @@
 }
 
 .possible-move{
-    box-shadow: inset 0px 0px 30px aqua;
+    box-shadow: inset 0px 0px calc(var(--width-cell) / 4) aqua;
 }
 
 .hidden-piece {
@@ -111,6 +111,6 @@
 
 
 .selected {
-    box-shadow: inset 0px 0px 30px rgba(0, 255, 17, 0.86);
+    box-shadow: inset 0px 0px calc(var(--width-cell) / 4) rgb(0, 255, 17);
     cursor:default;
 }

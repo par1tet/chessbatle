@@ -1,7 +1,7 @@
 body {
     --width-cell: 80px;
     --height-cell: 80px;
-    background: linear-gradient(129deg, rgba(2,138,88,1) 0%, rgba(14,117,116,1) 50%, rgba(0,164,255,1) 100%);
+    background: linear-gradient(90deg, rgb(141, 146, 144) 0%, rgb(150, 213, 212) 50%, rgb(255, 255, 255) 100%);
 }
 
 .who-is-move {
