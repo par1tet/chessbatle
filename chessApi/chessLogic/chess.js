@@ -13,10 +13,11 @@ class chessAPI{
         this.context = context
     }
 
-    makeMove(board = Board, move, coordsOut,coordsIn, notationName, isMoving = 'white') {// Данный метод реализует главную функцию, отвечающию за ход
-        let objectMove = board.moveOfPieceAllInfo(coordsIn, coordsOut, notationName, isMoving)
+    makeMove(board = Board, coordsOut,coordsIn, notationName, isMoving = 'white') {// Данный метод реализует главную функцию, отвечающию за ход
+        let toCanMove = board.moveOfPieceAllInfo(coordsIn, coordsOut, notationName, isMoving)
+        // console.log(toCanMove)
         // console.log(board.getField())
-        return objectMove
+        return toCanMove
     }
 
     itsCheck(coordsOut){
@@ -29,7 +30,7 @@ class chessAPI{
 
     itsCheckMate(side,field){
         let itsCheckMate = true
-        console.log(side)
+        // console.log(side)
         field.forEach((row, indexRow) => {
             row.forEach((cell, indexColumn) => {
                 if (cell === '  ') return 0

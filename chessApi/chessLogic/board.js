@@ -39,24 +39,24 @@ export class Board{// Данный класс реализует доску
 
     moveOfPieceAllInfo(coordsIn, coordsOut, notationName, isMoving){
         const pieceMove = new allPieces[notationName]()
-        if (pieceMove.toCanMove(this.field, coordsOut, coordsIn, isMoving)){
-            let tempField = this.getField()
 
-            tempField[coordsIn[0]][coordsIn[1]] = tempField[coordsOut[0]][coordsOut[1]]
-            tempField[coordsOut[0]][coordsOut[1]] = '  '
+        for (let i = 0;i < pieceMove.toCanMoves.length;i++){
+            let doMove = (pieceMove.toCanMoves[i])(this.getField(), coordsOut, coordsIn, isMoving)
 
-            // console.log(this.itsCheckForSide(isMoving,tempField))
-            // console.log(this.itsCheckForCounterSide(isMoving,tempField))
-            if(this.itsCheckForCounterSide(isMoving,tempField).isCheck){
-                return false
-            }else{
-                // console.log(pieceMove.getAllPossibleMoves(this.field,coordsOut,isMoving))
-                this.setField(tempField)
-                return true
+            if (doMove !== false){
+                let tempField = doMove(this.getField(), coordsOut, coordsIn)
+                // console.log(this.itsCheckForSide(isMoving,tempField))
+                // console.log(this.itsCheckForCounterSide(isMoving,tempField))
+                if(this.itsCheckForCounterSide(isMoving,tempField).isCheck){
+                    continue
+                }else{
+                    // console.log(pieceMove.getAllPossibleMoves(this.field,coordsOut,isMoving))
+                    this.setField(tempField)
+                    return true
+                }
             }
-        }else{
-            return false
         }
+        return false
     }
 
     itsCheck(coordsOut){
@@ -76,11 +76,13 @@ export class Board{// Данный класс реализует доску
                     // console.log(cell)
                     if (cell[0] === 'K'){
                         
-                        if (cell[1] === 'w'){
-                            checked.isCheck = pieceMove.toCanMove(this.getField(), coordsOut, [indexRow,indexColumn], 'black')
-                        }else{
-                            checked.isCheck = pieceMove.toCanMove(this.getField(), coordsOut, [indexRow,indexColumn], 'white')
-                        }
+                        pieceMove.toCanMoves.forEach(toCanMove => {
+                            if (cell[1] === 'w'){
+                                checked.isCheck = toCanMove(this.getField(), coordsOut, [indexRow,indexColumn], 'black')
+                            }else{
+                                checked.isCheck = toCanMove(this.getField(), coordsOut, [indexRow,indexColumn], 'white')
+                            }
+                        })
                         checked.cell = [indexRow,indexColumn]
                     }
                 }
@@ -127,9 +129,11 @@ export class Board{// Данный класс реализует доску
                     // console.log(pieceMove)
 
                     // console.log(pieceMove.toCanMove(field, [i, k], checked.cell, side))
-                    if(pieceMove.toCanMove(field, [i, k], checked.cell, side)){
-                        checked.isCheck = true
-                        return checked
+                    for (let l = 0;l < pieceMove.toCanMoves.length;l++){
+                        if(pieceMove.toCanMoves[l](field, [i, k], checked.cell, side)){
+                            checked.isCheck = true
+                            return checked
+                        }
                     }
                 }
             }
