@@ -3,8 +3,10 @@ import Piece from './Piece.jsx';
 import io from 'socket.io-client'
 import axios from 'axios';
 import './Board.css'
+import data from './env.json'
 
-const socket = io.connect("http://192.168.0.110:8000")
+const urlBack = data.backend_url
+const socket = io.connect(urlBack)
 
 function Board() {
 	const [field, setField] = useState([])
@@ -18,7 +20,7 @@ function Board() {
 	const [checkmate, setCheckmate] = useState(false)
 
 	function updateField(){
-		axios.get('http://192.168.0.110:8000/get_field')
+		axios.get(`${urlBack}/get_field`)
 		.then(r => {
 			setField(r.data.field)
 			// console.log(r.data.context.checked)
@@ -29,7 +31,7 @@ function Board() {
 	}
 
 	useEffect(() => {
-		axios.get('http://192.168.0.110:8000/get_whoismove')
+		axios.get(`${urlBack}/get_whoismove`)
 		.then(r => {
 			setIsMoving(r.data.whoismove)
 		})
@@ -54,7 +56,7 @@ function Board() {
 		let cells = documentBoard.children
 		
 		if (coordsOut.length !== 0){
-			axios.post('http://192.168.0.110:8000/getAllPossibleMovesOfPiece',{
+			axios.post(`${urlBack}/getAllPossibleMovesOfPiece`,{
 				'coordsOut':coordsOut
 			})
 			.then(r => {
@@ -135,7 +137,7 @@ function Board() {
 				return 0
 			}
 
-			axios.post('http://192.168.0.110:8000/can_to_move',{
+			axios.post(`${urlBack}/can_to_move`,{
 				"coordsOut": coordsOut,
 				"coordsIn": coordsIn,
 				"isMoving": isMoving,
@@ -156,7 +158,7 @@ function Board() {
 						cells[i].classList.remove('selected')
 					}
 				}
-				axios.get('http://192.168.0.110:8000/get_whoismove')
+				axios.get(`${urlBack}/get_whoismove`)
 				.then(r => {
 					setIsMoving(r.data.whoismove)
 					localStorage.setItem('whoismove', r.data.whoismove)
