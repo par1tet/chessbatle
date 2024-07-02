@@ -4,14 +4,14 @@ import bodyParser from 'body-parser'
 import { board, chessAPIMain } from '../chessLogic/chess.js'
 import { Server } from 'socket.io'
 import { createServer } from 'http'
+import fs from 'fs'
+// import { Buffer } from 'buffer';
 
 const PORT = process.env.PORT || 8000
+const test = JSON.parse(fs.readFileSync('serverLogic/env.json')).frontend_urls
 
 let corsOptions = {
-    origin: [
-        'http://localhost:3000',
-        'http://192.168.0.110:3000'
-    ],
+    origin: test,
     methods: ["GET", "POST"],
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
