@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/chessbatle/static/css/main.b537f5ad.css",
+    "main.js": "/chessbatle/static/js/main.caf891b7.js",
+    "static/media/whiteBishop.png": "/chessbatle/static/media/whiteBishop.ff1aef8112b2c3366ff6.png",
+    "static/media/whiteRook.png": "/chessbatle/static/media/whiteRook.7bc322f7ea7254ae15ef.png",
+    "static/media/blackBishop.png": "/chessbatle/static/media/blackBishop.58a3db103dd8749e509c.png",
+    "static/media/blackRook.png": "/chessbatle/static/media/blackRook.0b008d40598edc6afeb6.png",
+    "index.html": "/chessbatle/index.html",
+    "main.b537f5ad.css.map": "/chessbatle/static/css/main.b537f5ad.css.map",
+    "main.caf891b7.js.map": "/chessbatle/static/js/main.caf891b7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b537f5ad.css",
+    "static/js/main.caf891b7.js"
+  ]
+}
